@@ -12,7 +12,7 @@ namespace EnemyStates
         Enemy _enemy;
         public bool inSight;
         float _distance = 0;
-        float _range = 0;
+        //float _range = 0;
 
         FSM<T> _fsm;
         T _input;

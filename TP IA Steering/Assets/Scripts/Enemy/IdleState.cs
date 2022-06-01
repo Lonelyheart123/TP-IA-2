@@ -8,7 +8,7 @@ public class IdleState<T> : States<T>
     Transform _target;
     Enemy _enemy;
     private T _input;
-    float _counter = 0;
+    //float _counter = 0;
     private FSM<EnemyController.states> _fsm;
 
     public IdleState(Enemy enemy, Transform target, FSM <EnemyController.states> fsm, Vector3 dir)

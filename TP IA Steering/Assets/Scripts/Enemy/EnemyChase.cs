@@ -12,7 +12,7 @@ public class EnemyChase<T> : States<T>
     Enemy _enemy;
     public bool inSight;
     float _distance = 0;
-    bool PlayerDetected = false;
+    //bool PlayerDetected = false;
 
     FSM<T> _fsm;
     T _input;
@@ -37,7 +37,7 @@ public class EnemyChase<T> : States<T>
 
     public Vector3 GetDir()
     {
-        PlayerDetected = true;
+        //PlayerDetected = true;
         Vector3 dir = (_target.position - _npc.position).normalized;
         return dir;
     }

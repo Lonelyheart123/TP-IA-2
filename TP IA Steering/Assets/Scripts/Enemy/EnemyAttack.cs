@@ -51,7 +51,6 @@ namespace EnemyStates
         {
             Update();
             Debug.Log("Attack");
-
         }
 
         public override void Exit()
