@@ -21,6 +21,7 @@ public class EnemyController : MonoBehaviour
     private float radius;
     private float angle;
     private float avoidanceWeight;
+    INode _root;
     
     private void Awake()
 	{
@@ -41,6 +42,7 @@ public class EnemyController : MonoBehaviour
         _enemy = GetComponent<Enemy>();
         InitializedFSM();
         InitializedISteering();
+        InitializedTree();
     }
     void InitializedFSM()
     {
@@ -67,6 +69,26 @@ public class EnemyController : MonoBehaviour
         var avoidance = new ObstacleAvoidance(transform, obsMask, radius, angle);
         _steering = seek;
         _avoidance = avoidance;
+    }
+    void InitializedTree()
+    {
+
+        //Actions
+        INode attack = new ActionNode(() => _fsm.Transition(states.Attack));
+        INode chase = new ActionNode(() => _fsm.Transition(states.Chase));
+        INode patrol = new ActionNode(() => _fsm.Transition(states.Patrol));
+
+        //Questions
+        INode qIsEnemyClose = new QuestionNode(ShootRange, attack, chase);
+        INode qLineOfSight = new QuestionNode(LineOfSight, chase, patrol);
+
+        _root = qLineOfSight;
+    }
+    public bool LineOfSight()
+    {
+        bool isInSight = _enemy.IsInSight(target) ? true : false;
+        Debug.Log("Line of Sight anda" + isInSight);
+        return isInSight;
     }
     public bool ShootRange()
     {

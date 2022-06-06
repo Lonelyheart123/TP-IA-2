@@ -12,6 +12,7 @@ namespace EnemyStates
         Enemy _enemy;
         public bool inSight;
         float _distance = 0;
+        protected INode _root;
         //float _range = 0;
 
         FSM<T> _fsm;
