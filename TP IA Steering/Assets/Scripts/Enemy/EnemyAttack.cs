@@ -14,19 +14,16 @@ namespace EnemyStates
         float _counter = 0;
         Vector3 _dir;
         public EnemyBullet bulletprefab;
+        INode _root;
 
-        FSM<T> _fsm;
-        T _input;
-
-        public EnemyAttack(Enemy enemyModel, EnemyController enemyController,Transform target, float distance, FSM<T> _fsm, T input, Vector3 dir)
+        public EnemyAttack(Enemy enemyModel, EnemyController enemyController,Transform target, float distance, Vector3 dir, INode root)
         {
             _target = target;
             _enemy = enemyModel;
             _enemyController = enemyController;
             _distance = distance;
-            this._fsm = _fsm;
-            _input = input;
             _dir = dir;
+            _root = root;
         }
         public override void Init()
         {
@@ -41,10 +38,10 @@ namespace EnemyStates
                 _enemy.Attack(_dir);
                 _counter = 0;
             }
-            //else
-            //{
-            //    _fsm.Transition(_input);
-            //}
+            else
+            {
+                _root.execute();
+            }
         }
 
         public override void Execute()

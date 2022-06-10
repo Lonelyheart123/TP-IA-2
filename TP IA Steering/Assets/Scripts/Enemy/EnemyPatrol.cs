@@ -13,18 +13,13 @@ namespace EnemyStates
         public bool inSight;
         float _distance = 0;
         protected INode _root;
-        //float _range = 0;
 
-        FSM<T> _fsm;
-        T _input;
-
-        public EnemyPatrol(Enemy enemyModel, Transform target, float distance, FSM<T> _fsm, T input)
+        public EnemyPatrol(Enemy enemyModel, Transform target, float distance, INode root)
         {
             _target = target;
             _enemy = enemyModel;
             _distance = distance;
-            _input = input;
-            this._fsm = _fsm;
+            _root = root;
         }
 
         public override void Init()
@@ -41,10 +36,8 @@ namespace EnemyStates
             if (_enemy.IsInSight(_target))
             {
                 inSight = true;
-
-                _fsm.Transition(_input);
-
                 Debug.Log("Is in sight");
+                _root.execute();
             }
 
         }

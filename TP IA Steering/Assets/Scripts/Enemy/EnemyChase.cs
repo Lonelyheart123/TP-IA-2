@@ -12,22 +12,17 @@ public class EnemyChase<T> : States<T>
     Enemy _enemy;
     public bool inSight;
     float _distance = 0;
-    //bool PlayerDetected = false;
 
-    FSM<T> _fsm;
-    T _input;
-    T _input2;
     Transform _npc;
+    INode _root;
 
-    public EnemyChase(Enemy enemyModel, Transform target, float distance, FSM<T> _fsm, T _input, T _input2, Transform npc)
+    public EnemyChase(Enemy enemyModel, Transform target, float distance, Transform npc, INode root)
     {
         _target = target;
         _enemy = enemyModel;
         _distance = distance;
-        this._input = _input;
-        this._input2 = _input2;
-        this._fsm = _fsm;
         _npc = npc;
+        _root = root;
     }
 
     public override void Init()
@@ -44,17 +39,21 @@ public class EnemyChase<T> : States<T>
 
     void MoveToPlayer()
     {
-        //if (enemyController.LineOfSight() == true && enemyController.ShootRange() == false)
-        //{
-        //    Vector3 dir = GetDir();
-        //    _enemyModel.transform.LookAt(_target.position);
-        //    var ySpeed = _enemyModel.GetComponent<Rigidbody>().velocity.y;
-        //    _enemyModel.GetComponent<Rigidbody>().velocity = new Vector3(dir.x * _enemyModel.speed, ySpeed, dir.z * _enemyModel.speed);
-        //}
-        //else if (enemyController.LineOfSight() == true && enemyController.ShootRange() == true)
-        //{
-            _fsm.Transition(_input);
-        //}
+        if (enemyController.LineOfSight() == true && enemyController.ShootRange() == false)
+        {
+            Vector3 dir = GetDir();
+            _enemy.transform.LookAt(_target.position);
+            var ySpeed = _enemy.GetComponent<Rigidbody>().velocity.y;
+            _enemy.GetComponent<Rigidbody>().velocity = new Vector3(dir.x * _enemy.speed, ySpeed, dir.z * _enemy.speed);
+        }
+        else if (enemyController.LineOfSight() == true && enemyController.ShootRange() == true)
+        {
+            _root.execute();
+        }
+        else if (enemyController.LineOfSight() == false && enemyController.ShootRange() == false)
+        {
+            _root.execute();
+        }
     }
     
     public override void Execute()

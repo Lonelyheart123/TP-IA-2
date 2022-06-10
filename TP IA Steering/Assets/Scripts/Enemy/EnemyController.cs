@@ -40,15 +40,15 @@ public class EnemyController : MonoBehaviour
     {
         _fsm = new FSM<states>();
         _enemy = GetComponent<Enemy>();
-        InitializedFSM();
-        InitializedISteering();
         InitializedTree();
+        InitializedFSM();
+        InitializedISteering();     
     }
     void InitializedFSM()
     {
-       IStates<states> patrol = new EnemyPatrol<states>(_enemy, target, dist, _fsm, states.Chase);
-       IStates<states> chase = new EnemyChase<states>(_enemy, target, dist, _fsm, states.Attack, states.Patrol, _enemy.transform);
-       IStates<states> attack = new EnemyAttack<states>(_enemy, this,target, dist, _fsm, states.Patrol, dir);
+       IStates<states> patrol = new EnemyPatrol<states>(_enemy, target, dist, _root);
+       IStates<states> chase = new EnemyChase<states>(_enemy, target, dist, _enemy.transform, _root);
+       IStates<states> attack = new EnemyAttack<states>(_enemy, this,target, dist, dir, _root);
 
        patrol.AddTransition(states.Chase, chase);
        chase.AddTransition(states.Patrol, patrol);
