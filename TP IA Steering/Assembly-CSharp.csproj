@@ -63,6 +63,7 @@
     <Compile Include="Assets\Scripts\FSM\IEntity.cs" />
     <Compile Include="Assets\Scripts\Steering\Pursuit.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyAttack.cs" />
+    <Compile Include="Assets\Scripts\Pruebas\Entity.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\Astar.cs" />
     <Compile Include="Assets\Scripts\Tree\Roulette.cs" />
     <Compile Include="Assets\Scripts\Flocking\SeparationBehaviour.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Assets\Scripts\Tree\INode.cs" />
     <Compile Include="Assets\Scripts\Steering\Flee.cs" />
     <Compile Include="Assets\Scripts\Steering\Seek.cs" />
+    <Compile Include="Assets\Scripts\Pruebas\StController.cs" />
     <Compile Include="Assets\Scripts\Tree\QuestionNode.cs" />
     <Compile Include="Assets\Scripts\Player\MouseLook.cs" />
     <Compile Include="Assets\Scripts\Flocking\LeaderBehaviour.cs" />
@@ -83,6 +85,7 @@
     <Compile Include="Assets\Scripts\Flocking\AlingmentBehaviour.cs" />
     <Compile Include="Assets\Scripts\Flocking\FlockingManager.cs" />
     <Compile Include="Assets\Scripts\Enemy\ShootState.cs" />
+    <Compile Include="Assets\Scripts\Pruebas\StModel.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyBullet.cs" />
     <Compile Include="Assets\Scripts\IDamage.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyChase.cs" />
@@ -95,9 +98,7 @@
     <Compile Include="Assets\Scripts\Steering\IVel.cs" />
     <Compile Include="Assets\Scripts\Flocking\PredatorBehaviour.cs" />
     <Compile Include="Assets\Scripts\Steering\ObstacleAvoidance.cs" />
-    <Compile Include="Assets\Scripts\Pruebas\StController.cs" />
-    <Compile Include="Assets\Scripts\Pruebas\StModel.cs" />
-    <Compile Include="Assets\Scripts\Pruebas\Entity.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\WinTrigger.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
