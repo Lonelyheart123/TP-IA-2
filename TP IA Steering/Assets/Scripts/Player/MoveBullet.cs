@@ -12,10 +12,6 @@ public class MoveBullet : MonoBehaviour
         this.GetComponent<Rigidbody>().AddForce((hitPoint - this.transform.position).normalized * speed);
     }
 
-    void Update()
-    {
-
-    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Enemy")
