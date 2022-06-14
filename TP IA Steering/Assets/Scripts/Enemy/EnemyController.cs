@@ -47,7 +47,7 @@ public class EnemyController : MonoBehaviour
     void InitializedFSM()
     {
        IStates<states> patrol = new EnemyPatrol<states>(_enemy, target, dist, _root);
-       IStates<states> chase = new EnemyChase<states>(_enemy, target, dist, _enemy.transform, _root);
+       IStates<states> chase = new EnemyChase<states>(_enemy, target, dist, _root);
        IStates<states> attack = new EnemyAttack<states>(_enemy, this,target, dist, dir, _root);
 
        patrol.AddTransition(states.Chase, chase);
@@ -99,7 +99,7 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         _fsm.OnUpdate();
-        var dir = (_avoidance.GetDir() * avoidanceWeight + _steering.GetDir()).normalized;
+        //var dir = (_avoidance.GetDir() * avoidanceWeight + _steering.GetDir()).normalized;
         //_enemy.Move(dir);
         //_enemy.LookDir(dir);
     }

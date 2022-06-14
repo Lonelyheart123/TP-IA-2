@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace EnemyStates
 {
-    public class EnemyChase<T> : States<T>
+    public class EnemyChase<T> : EnemyPatrol<T>
     {
         GameObject Player;
         public bool _canPatrol = true;
@@ -18,12 +18,12 @@ namespace EnemyStates
         Transform _npc;
         INode _root;
 
-        public EnemyChase(Enemy enemyModel, Transform target, float distance, Transform npc, INode root)
+
+        public EnemyChase(Enemy enemyModel, Transform target, float distance, INode root) : base(enemyModel, target, distance, root)
         {
             _target = target;
             _enemy = enemyModel;
             _distance = distance;
-            _npc = npc;
             _root = root;
         }
 
@@ -35,24 +35,26 @@ namespace EnemyStates
         public Vector3 GetDir()
         {
             //PlayerDetected = true;
-            Vector3 dir = (_target.position - _npc.position).normalized;
+            Vector3 dir = (_target.position - _enemy.position).normalized;
             return dir;
         }
 
         void MoveToPlayer()
         {
-            if (enemyController.LineOfSight() == true && enemyController.ShootRange() == false)
+            bool isLineOfSight = enemyController.LineOfSight();
+            bool isInShootRange = enemyController.ShootRange();
+            if (isLineOfSight && !isInShootRange)
             {
                 Vector3 dir = GetDir();
                 _enemy.transform.LookAt(_target.position);
                 var ySpeed = _enemy.GetComponent<Rigidbody>().velocity.y;
                 _enemy.GetComponent<Rigidbody>().velocity = new Vector3(dir.x * _enemy.speed, ySpeed, dir.z * _enemy.speed);
             }
-            else if (enemyController.LineOfSight() == true && enemyController.ShootRange() == true)
+            else if (isLineOfSight && isInShootRange)
             {
                 _root.execute();
             }
-            else if (enemyController.LineOfSight() == false && enemyController.ShootRange() == false)
+            else 
             {
                 _root.execute();
             }

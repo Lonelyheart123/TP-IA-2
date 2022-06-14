@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour, IVel
-{ 
+{
     public Action OnCollision = delegate { };
     public float GetVel => _rb.velocity.magnitude;
     public Vector3 GetFoward => transform.forward;
@@ -24,6 +24,9 @@ public class Enemy : MonoBehaviour, IVel
 
     public LayerMask maskEnemies;
     internal Vector3 position;
+
+    int _lastFrameLOS;
+    bool _cacheLOS;
 
     private void Awake()
     {
@@ -76,16 +79,34 @@ public class Enemy : MonoBehaviour, IVel
     //IN-SIGHT
     public bool IsInSight(Transform target)
     {
+        int actualFrame = Time.frameCount;
+        if (_lastFrameLOS == actualFrame)
+        {
+            return _cacheLOS;
+        }
+        _lastFrameLOS = actualFrame;
         Vector3 diff = (transform.position - target.position);
         float distance = diff.magnitude;
-        if (distance > range) return false;
+        if (distance > range)
+        {
+            _cacheLOS = false;
+            return false;
+        }
 
         float angleToTarget = Vector3.Angle(transform.position, diff);
-        if (angleToTarget > angle / 2) return false;
+        if (angleToTarget > angle / 2)
+        {
+            _cacheLOS = false;
+            return false;
+        }
 
         Vector3 dirToTarget = diff.normalized;
-        if (Physics.Raycast(transform.position, dirToTarget, distance, maskEnemies)) return false;
-
+        if (Physics.Raycast(transform.position, dirToTarget, distance, maskEnemies))
+        {
+            _cacheLOS = false;
+            return false;
+        }
+        _cacheLOS = true;
         return true;
     }
     //ATTACK
