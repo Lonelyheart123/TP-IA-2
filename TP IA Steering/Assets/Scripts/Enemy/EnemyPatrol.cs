@@ -24,7 +24,7 @@ namespace EnemyStates
 
         public override void Init()
         {
-            Debug.Log("Awake");
+
         }
 
         public override void Execute()

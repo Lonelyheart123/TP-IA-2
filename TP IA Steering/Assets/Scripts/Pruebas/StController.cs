@@ -10,19 +10,23 @@ public class StController : MonoBehaviour
     IVel _targetvel;
     public Transform target;
     ISteering _steering;
+    ISteering _avoidance;
     StModel _model;
     public float predictionTime;
-
-    private void Start()
-    {
-        //CreateRoulette();
-    }
+    public LayerMask obsMask;
+    public float radius;
+    public float angle;
+    public float avoidanceWeight = 1;
+    public float steeringWeight = 1;
     void InitializaedSteering()
     {
         var seek = new Seek(transform, target.transform);
         var flee = new Flee(transform, target.transform);
         var pursuit = new Pursuit(transform, target.transform, _targetvel, predictionTime);
+        var evade = new Evade(transform, target.transform, _targetvel, predictionTime);
+        var avoidance = new ObstacleAvoidance(transform, obsMask, radius, angle);
         _steering = seek;
+        _steering = avoidance;//sigue y esquiva obstaculos
     }
     private void Awake()
     {
@@ -35,26 +39,11 @@ public class StController : MonoBehaviour
     }
     private void Update()
     {
-        var dir = _steering.GetDir();
+        Vector3 dir = ((_avoidance.GetDir() * avoidanceWeight) + (_steering.GetDir() * steeringWeight)).normalized;
         _model.Move(dir);
         _model.LookDir(dir);
     }
-    //public void CreateRoulette()
-    //{
-    //    Debug.Log("Ruleta Enemy Creada");
-    //    _roulette = new Roulette();
-
-    //    ActionNode healing = new ActionNode();
-    //    ActionNode shoot = new ActionNode();
-    //    ActionNode idle = new ActionNode();
-
-    //    _rouletteNodes.Add(healing, 33);
-    //    _rouletteNodes.Add(idle, 33);
-    //    _rouletteNodes.Add(shoot, 33);
-
-    //    ActionNode rouletteAction = new ActionNode(RouletteAction);
-
-    //}
+   
     public void RouletteAction()
     {
         ActionNode nodeRoulette = _roulette.Run(_rouletteNodes);
@@ -66,5 +55,8 @@ public class StController : MonoBehaviour
         Gizmos.color = Color.red;
         var dir = _steering.GetDir();
         Gizmos.DrawRay(transform.position, dir * 2);
+        Gizmos.DrawWireSphere(transform.position, radius);
+        Gizmos.DrawRay(transform.position, Quaternion.Euler(0, angle / 2, 0) * transform.forward);
+        Gizmos.DrawRay(transform.position, Quaternion.Euler(0, -angle / 2, 0) * transform.forward);
     }
 }
