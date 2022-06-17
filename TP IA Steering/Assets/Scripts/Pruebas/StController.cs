@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class StController : MonoBehaviour
 {
-    Roulette _roulette;
-    Dictionary<ActionNode, int> _rouletteNodes = new Dictionary<ActionNode, int>();
+    //Roulette _roulette;
+    //Dictionary<ActionNode, int> _rouletteNodes = new Dictionary<ActionNode, int>();
 
-    IVel _targetvel;
-    public Transform target;
+    public PlayerMove target;
     ISteering _steering;
     ISteering _avoidance;
     StModel _model;
@@ -22,8 +21,8 @@ public class StController : MonoBehaviour
     {
         var seek = new Seek(transform, target.transform);
         var flee = new Flee(transform, target.transform);
-        var pursuit = new Pursuit(transform, target.transform, _targetvel, predictionTime);
-        var evade = new Evade(transform, target.transform, _targetvel, predictionTime);
+        var pursuit = new Pursuit(transform, target.transform, target, predictionTime);
+        var evade = new Evade(transform, target.transform, target, predictionTime);
         var avoidance = new ObstacleAvoidance(transform, obsMask, radius, angle);
         _steering = seek;
         _steering = avoidance;//sigue y esquiva obstaculos
@@ -39,16 +38,16 @@ public class StController : MonoBehaviour
     }
     private void Update()
     {
-        Vector3 dir = ((_avoidance.GetDir() * avoidanceWeight) + (_steering.GetDir() * steeringWeight)).normalized;
-        _model.Move(dir);
+        var dir = (_avoidance.GetDir() * avoidanceWeight + _steering.GetDir() * steeringWeight).normalized;
+        _model.Move(transform.forward);
         _model.LookDir(dir);
     }
    
-    public void RouletteAction()
-    {
-        ActionNode nodeRoulette = _roulette.Run(_rouletteNodes);
-        nodeRoulette.execute();
-    }
+    //public void RouletteAction()
+    //{
+    //    ActionNode nodeRoulette = _roulette.Run(_rouletteNodes);
+    //    nodeRoulette.execute();
+    //}
     private void OnDrawGizmos()
     {
         if (_steering == null) return;

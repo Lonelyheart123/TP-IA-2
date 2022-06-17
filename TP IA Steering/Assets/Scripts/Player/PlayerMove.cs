@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerMove : MonoBehaviour, IVel
 {
     public CharacterController controller;
     private float speed = 12f;
+
+    public float GetVel => throw new System.NotImplementedException();
+
+    public Vector3 GetFoward => throw new System.NotImplementedException();
 
     // Start is called before the first frame update
     void Start()

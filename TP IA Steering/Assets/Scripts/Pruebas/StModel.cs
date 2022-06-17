@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StModel : MonoBehaviour
+public class StModel : MonoBehaviour, IVel
 {
     public float speed;
     Rigidbody _rb;
+
+    public float GetVel => _rb.velocity.magnitude;
+
+    public Vector3 GetFoward => transform.forward;
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
