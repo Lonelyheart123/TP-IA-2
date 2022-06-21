@@ -99,6 +99,7 @@
     <Compile Include="Assets\Scripts\Flocking\PredatorBehaviour.cs" />
     <Compile Include="Assets\Scripts\MainMenu\WinTrigger.cs" />
     <Compile Include="Assets\Scripts\Steering\ObstacleAvoidance.cs" />
+    <Compile Include="Assets\Scripts\Entity.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

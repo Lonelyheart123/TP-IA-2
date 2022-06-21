@@ -4,27 +4,27 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour, IVel
 {
-    public CharacterController controller;
-    private float speed = 12f;
+    public float speed;
+    Rigidbody _rb;
 
-    public float GetVel => throw new System.NotImplementedException();
+    public float GetVel => _rb.velocity.magnitude;
 
-    public Vector3 GetFoward => throw new System.NotImplementedException();
+    public Vector3 GetFoward => transform.forward;
+    //public Vector3 GetFoward => _rb.velocity.normalized;
 
-    // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
-        
+        _rb = GetComponent<Rigidbody>();
     }
-
-    // Update is called once per frame
-    void Update()
+    public void Move(Vector3 dir)
     {
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-        
-        //move where you re looking at
-        Vector3 move = transform.right * x + transform.forward * z;
-        controller.Move(move * speed * Time.deltaTime);
+        dir.y = 0;
+        _rb.velocity = dir * speed;
+    }
+    public void LookDir(Vector3 dir)
+    {
+        dir.y = 0;
+        transform.forward = Vector3.Lerp(transform.forward, dir, 0.02f);
     }
 }

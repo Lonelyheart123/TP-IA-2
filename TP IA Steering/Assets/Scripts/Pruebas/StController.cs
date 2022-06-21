@@ -7,16 +7,16 @@ public class StController : MonoBehaviour
     //Roulette _roulette;
     //Dictionary<ActionNode, int> _rouletteNodes = new Dictionary<ActionNode, int>();
 
-    public PlayerMove target;
-    ISteering _steering;
-    ISteering _avoidance;
-    StModel _model;
+    public Entity target;
+    Entity _model;
     public float predictionTime;
-    public LayerMask obsMask;
     public float radius;
     public float angle;
     public float avoidanceWeight = 1;
     public float steeringWeight = 1;
+    public LayerMask obsMask;
+    ISteering _steering;
+    ISteering _avoidance;
     void InitializaedSteering()
     {
         var seek = new Seek(transform, target.transform);
@@ -28,9 +28,9 @@ public class StController : MonoBehaviour
         _steering = avoidance;//sigue y esquiva obstaculos
     }
     private void Awake()
-    {
+    {   
+        _model = GetComponent<Entity>();
         InitializaedSteering();
-        _model = GetComponent<StModel>();
     }
     public void SetNewSteering(ISteering newSteering)
     {
@@ -39,8 +39,8 @@ public class StController : MonoBehaviour
     private void Update()
     {
         var dir = (_avoidance.GetDir() * avoidanceWeight + _steering.GetDir() * steeringWeight).normalized;
-        _model.Move(transform.forward);
         _model.LookDir(dir);
+        _model.Move(transform.forward);
     }
    
     //public void RouletteAction()
@@ -50,12 +50,14 @@ public class StController : MonoBehaviour
     //}
     private void OnDrawGizmos()
     {
-        if (_steering == null) return;
         Gizmos.color = Color.red;
-        var dir = _steering.GetDir();
-        Gizmos.DrawRay(transform.position, dir * 2);
+        if (_steering != null)
+        {
+            var dir = _steering.GetDir();
+            Gizmos.DrawRay(transform.position, dir * 2);
+        }
         Gizmos.DrawWireSphere(transform.position, radius);
-        Gizmos.DrawRay(transform.position, Quaternion.Euler(0, angle / 2, 0) * transform.forward);
-        Gizmos.DrawRay(transform.position, Quaternion.Euler(0, -angle / 2, 0) * transform.forward);
+        Gizmos.DrawRay(transform.position, Quaternion.Euler(0, angle / 2, 0) * transform.forward * radius);
+        Gizmos.DrawRay(transform.position, Quaternion.Euler(0, -angle / 2, 0) * transform.forward * radius);
     }
 }
