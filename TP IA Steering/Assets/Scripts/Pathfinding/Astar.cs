@@ -29,7 +29,6 @@ public class Astar<T>
                 foreach (var neigh in neighbours)
                 {
                     if (visited.Contains(neigh)) continue;
-
                     var neighCost = cost[curr] + getCost(curr, neigh);
                     if (cost.ContainsKey(neigh) && cost[neigh] <= neighCost) continue;
                     cost[neigh] = neighCost;

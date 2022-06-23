@@ -4,45 +4,86 @@ using UnityEngine;
 
 public class StController : MonoBehaviour
 {
-    //Roulette _roulette;
-    //Dictionary<ActionNode, int> _rouletteNodes = new Dictionary<ActionNode, int>();
+    Roulette _roulette;
+    Dictionary<ActionNode, int> _rouletteNodes = new Dictionary<ActionNode, int>();
 
-    public Entity target;
-    Entity _model;
+    Transform _target;
+    Transform _entity;
+
+    public StModel target;
+    StModel _model;
     public float predictionTime;
     public float radius;
+    public float range = 30;
     public float angle;
     public float avoidanceWeight = 1;
     public float steeringWeight = 1;
     public LayerMask obsMask;
     ISteering _steering;
     ISteering _avoidance;
-    void InitializaedSteering()
+    void InitializedSteering()
     {
         var seek = new Seek(transform, target.transform);
         var flee = new Flee(transform, target.transform);
         var pursuit = new Pursuit(transform, target.transform, target, predictionTime);
         var evade = new Evade(transform, target.transform, target, predictionTime);
         var avoidance = new ObstacleAvoidance(transform, obsMask, radius, angle);
-        _steering = seek;
-        _steering = avoidance;//sigue y esquiva obstaculos
+        _steering = pursuit;
+        _avoidance = avoidance;//sigue y esquiva obstaculos
     }
     private void Awake()
     {   
-        _model = GetComponent<Entity>();
-        InitializaedSteering();
+        _model = GetComponent<StModel>();
+        InitializedSteering();
+        //CreateRoulette();
     }
+
     public void SetNewSteering(ISteering newSteering)
     {
         _steering = newSteering;
     }
+    //void Seek(Transform entity, Transform target)
+    //{
+    //    _entity = entity;
+    //    SetTarget(target);
+    //}
     private void Update()
     {
         var dir = (_avoidance.GetDir() * avoidanceWeight + _steering.GetDir() * steeringWeight).normalized;
         _model.LookDir(dir);
         _model.Move(transform.forward);
     }
-   
+    public bool LineOfSight(Transform target)
+    {
+        Vector3 diff = target.position - transform.position;
+        float distance = diff.magnitude;
+        if (distance > range) return false;
+
+        //ANGLE
+        float angleToTarget = Vector3.Angle(diff, transform.forward);
+        if (angleToTarget > angle / 2) return false;
+
+        //TARGETVIEW
+        if (Physics.Raycast(transform.position, diff.normalized, distance, obsMask)) return false;
+
+        return true;
+    }
+    //public void CreateRoulette()
+    //{
+    //    Debug.Log("Ruleta Enemy Creada");
+    //    _roulette = new Roulette();
+
+    //    ActionNode healing = new ActionNode(Seek);
+    //    ActionNode shoot = new ActionNode(Attack);
+    //    ActionNode idle = new ActionNode(FalseAttack);
+
+    //    _rouletteNodes.Add(healing, 33);
+    //    _rouletteNodes.Add(idle, 33);
+    //    _rouletteNodes.Add(shoot, 33);
+
+    //    ActionNode rouletteAction = new ActionNode(RouletteAction);
+
+    //}
     //public void RouletteAction()
     //{
     //    ActionNode nodeRoulette = _roulette.Run(_rouletteNodes);
