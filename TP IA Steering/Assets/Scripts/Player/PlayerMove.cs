@@ -6,13 +6,22 @@ public class PlayerMove : MonoBehaviour, IVel
 {
     public float speed;
     Rigidbody _rb;
+    public CharacterController controller;
 
     public float GetVel => _rb.velocity.magnitude;
 
     public Vector3 GetFoward => transform.forward;
     //public Vector3 GetFoward => _rb.velocity.normalized;
 
+    private void Update()
+    {
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
 
+        Vector3 move = transform.right * x + transform.forward * z;
+
+        controller.Move(move * speed * Time.deltaTime);
+    }
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();

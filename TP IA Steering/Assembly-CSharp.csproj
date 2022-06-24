@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Pathfinding\PriorityQueue.cs" />
+    <Compile Include="Assets\Scripts\Pathfinding\CI_Model.cs" />
     <Compile Include="Assets\Scripts\Steering\ISteering.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyController.cs" />
     <Compile Include="Assets\Scripts\Player\Gun.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Assets\Scripts\Steering\Pursuit.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyAttack.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\Astar.cs" />
+    <Compile Include="Assets\Scripts\Pathfinding\IPoints.cs" />
     <Compile Include="Assets\Scripts\Tree\Roulette.cs" />
     <Compile Include="Assets\Scripts\Flocking\SeparationBehaviour.cs" />
     <Compile Include="Assets\Scripts\Enemy\IdleState.cs" />
@@ -71,6 +73,7 @@
     <Compile Include="Assets\Scripts\Entity.cs" />
     <Compile Include="Assets\Scripts\FSM\States.cs" />
     <Compile Include="Assets\Scripts\Tree\RandomNode.cs" />
+    <Compile Include="Assets\Scripts\Pathfinding\Pathfinder Controller.cs" />
     <Compile Include="Assets\Scripts\MainMenu\LevelManager.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMove.cs" />
     <Compile Include="Assets\Scripts\Tree\INode.cs" />
@@ -93,6 +96,7 @@
     <Compile Include="Assets\Scripts\Steering\Evade.cs" />
     <Compile Include="Assets\Scripts\Player\MoveBullet.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyPatrol.cs" />
+    <Compile Include="Assets\Scripts\Pathfinding\Node.cs" />
     <Compile Include="Assets\Scripts\Flocking\CohesionBehaviour.cs" />
     <Compile Include="Assets\Scripts\FSM\FSM.cs" />
     <Compile Include="Assets\Scripts\FSM\IStates.cs" />
@@ -100,6 +104,7 @@
     <Compile Include="Assets\Scripts\Flocking\PredatorBehaviour.cs" />
     <Compile Include="Assets\Scripts\MainMenu\WinTrigger.cs" />
     <Compile Include="Assets\Scripts\Steering\ObstacleAvoidance.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

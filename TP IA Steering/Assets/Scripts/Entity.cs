@@ -2,14 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Entity : MonoBehaviour, IVel
+public class Entity : MonoBehaviour
 {
-    public float speed;
+    float speed = 5;
     Rigidbody _rb;
-
-    public float GetVel => _rb.velocity.magnitude;
-
-    public Vector3 GetFoward => transform.forward;
     //public Vector3 GetFoward => _rb.velocity.normalized;
 
 

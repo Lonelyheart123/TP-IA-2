@@ -99,13 +99,6 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         _fsm.OnUpdate();
-        //var dir = (_avoidance.GetDir() * avoidanceWeight + _steering.GetDir()).normalized;
-        //_enemy.Move(dir);
-        //_enemy.LookDir(dir);
-    }
-    public void NewSetISteering(ISteering newSteering)
-    {
-        _steering = newSteering; 
     }
     //DestroyEnemy
     private void OnCollisionEnter(Collision collision)

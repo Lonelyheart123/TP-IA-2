@@ -4,14 +4,8 @@ using UnityEngine;
 
 public class StController : MonoBehaviour
 {
-    Roulette _roulette;
-    Dictionary<ActionNode, int> _rouletteNodes = new Dictionary<ActionNode, int>();
-
-    Transform _target;
-    Transform _entity;
-
-    public StModel target;
-    StModel _model;
+    public PlayerMove target;
+    Entity _model;
     public float predictionTime;
     public float radius;
     public float range = 30;
@@ -28,25 +22,19 @@ public class StController : MonoBehaviour
         var pursuit = new Pursuit(transform, target.transform, target, predictionTime);
         var evade = new Evade(transform, target.transform, target, predictionTime);
         var avoidance = new ObstacleAvoidance(transform, obsMask, radius, angle);
-        _steering = pursuit;
+        _steering = seek;
         _avoidance = avoidance;//sigue y esquiva obstaculos
     }
     private void Awake()
     {   
-        _model = GetComponent<StModel>();
+        _model = GetComponent<Entity>();
         InitializedSteering();
-        //CreateRoulette();
     }
 
     public void SetNewSteering(ISteering newSteering)
     {
         _steering = newSteering;
     }
-    //void Seek(Transform entity, Transform target)
-    //{
-    //    _entity = entity;
-    //    SetTarget(target);
-    //}
     private void Update()
     {
         var dir = (_avoidance.GetDir() * avoidanceWeight + _steering.GetDir() * steeringWeight).normalized;
@@ -68,27 +56,6 @@ public class StController : MonoBehaviour
 
         return true;
     }
-    //public void CreateRoulette()
-    //{
-    //    Debug.Log("Ruleta Enemy Creada");
-    //    _roulette = new Roulette();
-
-    //    ActionNode healing = new ActionNode(Seek);
-    //    ActionNode shoot = new ActionNode(Attack);
-    //    ActionNode idle = new ActionNode(FalseAttack);
-
-    //    _rouletteNodes.Add(healing, 33);
-    //    _rouletteNodes.Add(idle, 33);
-    //    _rouletteNodes.Add(shoot, 33);
-
-    //    ActionNode rouletteAction = new ActionNode(RouletteAction);
-
-    //}
-    //public void RouletteAction()
-    //{
-    //    ActionNode nodeRoulette = _roulette.Run(_rouletteNodes);
-    //    nodeRoulette.execute();
-    //}
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
