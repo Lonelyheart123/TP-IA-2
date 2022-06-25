@@ -152,8 +152,8 @@ MonoBehaviour:
   cooldownSpeed: 0
   recoilCooldown: 0
   maxSpreadAngle: 3
-  timeTillMaxSpread: 10
-  fireRate: 6
+  timeTillMaxSpread: 5
+  fireRate: 10
   timeBullet: 3
 --- !u!1 &4755433207756283424
 GameObject:
