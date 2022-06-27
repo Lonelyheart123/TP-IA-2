@@ -8,7 +8,7 @@ namespace EnemyStates
     {
         GameObject Player;
         //public bool _canPatrol = true;
-        Transform _target;
+        PlayerMove _target;
         Enemy _enemy;
         EnemyController _enemyController;
         Pursuit pursuit;
@@ -20,15 +20,17 @@ namespace EnemyStates
 
 
         Transform _npc;
+        ISteering _steering;
         //INode _root;
 
-        public EnemyChase(Enemy enemyModel, EnemyController enemyController, Transform target, float distance, INode root) : base(enemyModel, target, distance, root)
+        public EnemyChase(Enemy enemyModel, EnemyController enemyController, PlayerMove target, float distance, INode root) : base(enemyModel, target, distance, root)
         {
             _target = target;
             _enemyController = enemyController;
             _enemy = enemyModel;
             _distance = distance;
             base._root = root;
+            _steering = new Pursuit(enemyModel.transform, target.transform, target, 5);//No HARDCODEEEEE
         }
 
         public override void Init()
@@ -43,12 +45,13 @@ namespace EnemyStates
 
         void MoveToPlayer()
         {
+            _enemy.Move(_steering.GetDir());
             bool isLineOfSight = _enemyController.LineOfSight();
             bool isInShootRange = _enemyController.ShootRange();
             if (isLineOfSight && !isInShootRange)
             {
                 Vector3 dir = GetDir();
-                _enemy.transform.LookAt(_target.position);
+                _enemy.transform.LookAt(_target.transform.position);
                 var ySpeed = _enemy.GetComponent<Rigidbody>().velocity.y;
                 _enemy.GetComponent<Rigidbody>().velocity = new Vector3(dir.x * _enemy.speed, ySpeed, dir.z * _enemy.speed);
             }

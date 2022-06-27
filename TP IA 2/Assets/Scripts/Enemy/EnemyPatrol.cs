@@ -14,7 +14,7 @@ namespace EnemyStates
         public bool inSight;
         float _distance = 0;
         protected INode _root;
-        ISteering newSteering;
+        ISteering _newSteering;
 
         public EnemyPatrol(Enemy enemyModel, Transform target, float distance, INode root)
         {
@@ -22,6 +22,7 @@ namespace EnemyStates
             _enemy = enemyModel;
             _distance = distance;
             _root = root;
+            _newSteering = new Seek(enemyModel.transform, target.transform);
         }
 
         public override void Init()
@@ -31,11 +32,9 @@ namespace EnemyStates
 
         public override void Execute()
         {
-
             _enemy.Move(_enemy.GetDir());
-
             Debug.Log("Patrolling");
-            //_enemy.Move(/*_enemy.GetDir()*/);
+            _enemy.Move(_newSteering.GetDir());
             //_enemy.GetDir();
             _enemy.stController.SetNewSteering(seek);
             if (_enemy.IsInSight(_target))

@@ -31,7 +31,7 @@ public class PathfinderController : MonoBehaviour
     {
         path = _ast.GetPath(start, IsSatisfied, GetNeighbours, GetCost, Heuristic);
         crash.SetWayPoints(path);
-        //player.SetWayPoints(path);
+        player.SetWayPoints(path);
     }
     float Heuristic(Node curr)
     {

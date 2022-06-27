@@ -1196,9 +1196,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waypoints: []
-  speed: 2
+  speed: 10
   speedRot: 10
-  readyToMove: 0
+  readyToMove: 1
 --- !u!114 &494229148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2438,7 +2438,7 @@ MonoBehaviour:
   steeringWeight: 1
   obsMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
 --- !u!1 &895800107
 GameObject:
   m_ObjectHideFlags: 0
@@ -4426,6 +4426,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 9197412631170533104, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9197412631170533106, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -4556,7 +4560,7 @@ MonoBehaviour:
   steeringWeight: 1
   obsMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
 --- !u!1 &1476756412
 GameObject:
   m_ObjectHideFlags: 0
@@ -5788,8 +5792,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bb9a2e06b634354d972979ebbfddb9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waypoints: []
   speed: 16
   controller: {fileID: 1935734535}
+  readyToMove: 0
 --- !u!54 &1935734537
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6590,6 +6596,10 @@ PrefabInstance:
     - target: {fileID: 9197412631170533104, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 9197412631170533104, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9197412631170533106, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
       propertyPath: m_RootOrder

@@ -37,6 +37,7 @@ public class Enemy : MonoBehaviour, IVel
     {
         _rb = GetComponent<Rigidbody>();
         _transform = GetComponent<Transform>();
+        stController = GetComponent<StController>();
     }
 
     //CHECK-ENEMIES
