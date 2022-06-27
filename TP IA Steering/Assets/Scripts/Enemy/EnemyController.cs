@@ -47,7 +47,7 @@ public class EnemyController : MonoBehaviour
     void InitializedFSM()
     {
        IStates<states> patrol = new EnemyPatrol<states>(_enemy, target, dist, _root);
-       IStates<states> chase = new EnemyChase<states>(_enemy, target, dist, _root);
+       IStates<states> chase = new EnemyChase<states>(_enemy, this, target, dist, _root);
        IStates<states> attack = new EnemyAttack<states>(_enemy, this,target, dist, dir, _root);
 
        patrol.AddTransition(states.Chase, chase);
@@ -72,12 +72,10 @@ public class EnemyController : MonoBehaviour
     }
     void InitializedTree()
     {
-
         //Actions
         INode attack = new ActionNode(() => _fsm.Transition(states.Attack));
         INode chase = new ActionNode(() => _fsm.Transition(states.Chase));
         INode patrol = new ActionNode(() => _fsm.Transition(states.Patrol));
-
         //Questions
         INode qIsEnemyClose = new QuestionNode(ShootRange, attack, chase);
         INode qLineOfSight = new QuestionNode(LineOfSight, chase, patrol);
@@ -87,7 +85,7 @@ public class EnemyController : MonoBehaviour
     public bool LineOfSight()
     {
         bool isInSight = _enemy.IsInSight(target) ? true : false;
-        Debug.Log("Line of Sight anda" + isInSight);
+        Debug.Log("Line of Sight:" + isInSight);
         return isInSight;
     }
     public bool ShootRange()

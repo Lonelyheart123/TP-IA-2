@@ -30,7 +30,7 @@ public class PathfinderController : MonoBehaviour
     }
     float GetCost(Node parent, Node child)
     {
-        float trapCost = 5;
+        //float trapCost = 5;
         float distanceMultiplier = 2;
 
         float cost = 0;

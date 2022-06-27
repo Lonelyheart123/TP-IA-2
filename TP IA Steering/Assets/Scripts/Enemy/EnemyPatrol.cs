@@ -29,7 +29,6 @@ namespace EnemyStates
 
         public override void Execute()
         {
-            Debug.Log("Patrolling");
 
             _enemy.Move(_enemy.GetDir());
 
@@ -44,7 +43,6 @@ namespace EnemyStates
 
         public override void Exit()
         {
-            Debug.Log("Enemy PatrolState sleep");
         }
     }
 }

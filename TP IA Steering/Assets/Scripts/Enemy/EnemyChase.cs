@@ -7,29 +7,27 @@ namespace EnemyStates
     public class EnemyChase<T> : EnemyPatrol<T>
     {
         GameObject Player;
-        public bool _canPatrol = true;
-
-        EnemyController enemyController;
+        //public bool _canPatrol = true;
         Transform _target;
         Enemy _enemy;
-        public bool inSight;
+        EnemyController _enemyController;
+        //public bool inSight;
         float _distance = 0;
 
         Transform _npc;
-        INode _root;
+        //INode _root;
 
-
-        public EnemyChase(Enemy enemyModel, Transform target, float distance, INode root) : base(enemyModel, target, distance, root)
+        public EnemyChase(Enemy enemyModel, EnemyController enemyController, Transform target, float distance, INode root) : base(enemyModel, target, distance, root)
         {
             _target = target;
+            _enemyController = enemyController;
             _enemy = enemyModel;
             _distance = distance;
-            _root = root;
+            base._root = root;
         }
 
         public override void Init()
         {
-            Debug.Log("Awake");
         }
 
         public Vector3 GetDir()
@@ -41,8 +39,8 @@ namespace EnemyStates
 
         void MoveToPlayer()
         {
-            bool isLineOfSight = enemyController.LineOfSight();
-            bool isInShootRange = enemyController.ShootRange();
+            bool isLineOfSight = _enemyController.LineOfSight();
+            bool isInShootRange = _enemyController.ShootRange();
             if (isLineOfSight && !isInShootRange)
             {
                 Vector3 dir = GetDir();
@@ -52,11 +50,11 @@ namespace EnemyStates
             }
             else if (isLineOfSight && isInShootRange)
             {
-                _root.execute();
+                base._root.execute();
             }
             else 
             {
-                _root.execute();
+                base._root.execute();
             }
         }
 

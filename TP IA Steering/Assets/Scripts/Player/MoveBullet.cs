@@ -20,7 +20,6 @@ public class MoveBullet : MonoBehaviour
         }
         else
         {
-            Debug.Log("Bullet Lost");
             Destroy(this.gameObject);
         }
     }
