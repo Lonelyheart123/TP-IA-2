@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{F714BC51-5794-45B4-84B2-F9B6A21185D3}</ProjectGuid>
+    <ProjectGuid>{973EEF28-3B66-BE6D-98CD-ACE5795FC818}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -57,19 +57,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Pathfinding\PriorityQueue.cs" />
+    <Compile Include="Assets\Scripts\Pathfinding\CI_Model.cs" />
     <Compile Include="Assets\Scripts\Steering\ISteering.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyController.cs" />
     <Compile Include="Assets\Scripts\Player\Gun.cs" />
+    <Compile Include="Assets\Scripts\Pathfinding\CI_Controller.cs" />
     <Compile Include="Assets\Scripts\FSM\IEntity.cs" />
     <Compile Include="Assets\Scripts\Steering\Pursuit.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyAttack.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\Astar.cs" />
+    <Compile Include="Assets\Scripts\Pathfinding\IPoints.cs" />
     <Compile Include="Assets\Scripts\Tree\Roulette.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Flocking\SeparationBehaviour.cs" />
     <Compile Include="Assets\Scripts\Enemy\IdleState.cs" />
     <Compile Include="Assets\Scripts\Tree\ActionNode.cs" />
+    <Compile Include="Assets\Scripts\Entity.cs" />
     <Compile Include="Assets\Scripts\FSM\States.cs" />
     <Compile Include="Assets\Scripts\Tree\RandomNode.cs" />
+    <Compile Include="Assets\Scripts\Pathfinding\PathfinderController.cs" />
     <Compile Include="Assets\Scripts\MainMenu\LevelManager.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMove.cs" />
     <Compile Include="Assets\Scripts\Tree\INode.cs" />
@@ -92,6 +98,7 @@
     <Compile Include="Assets\Scripts\Steering\Evade.cs" />
     <Compile Include="Assets\Scripts\Player\MoveBullet.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyPatrol.cs" />
+    <Compile Include="Assets\Scripts\Pathfinding\Node.cs" />
     <Compile Include="Assets\Scripts\Flocking\CohesionBehaviour.cs" />
     <Compile Include="Assets\Scripts\FSM\FSM.cs" />
     <Compile Include="Assets\Scripts\FSM\IStates.cs" />
@@ -674,7 +681,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="UnityEngine.UI.Player.csproj">
-      <Project>{A6DE1C02-81B1-85C7-5A26-2254C915FA02}</Project>
+      <Project>{D475EE8C-CE17-E82D-2A44-CB9A40FDFC2A}</Project>
       <Name>UnityEngine.UI.Player</Name>
     </ProjectReference>
   </ItemGroup>
