@@ -9,9 +9,14 @@ public class Enemy : MonoBehaviour, IVel
     public float GetVel => _rb.velocity.magnitude;
     public Vector3 GetFoward => transform.forward;
 
+    Transform _target;
+    Transform _entity;
     Transform _transform;
     Rigidbody _rb;
+    Seek seek;
     public EnemyBullet _enemyBullet;
+    public EnemyController enemyController;
+    public StController stController;
 
     public float range = 30;
     public float angle = 90;
@@ -45,6 +50,7 @@ public class Enemy : MonoBehaviour, IVel
         }
         return objs;
     }
+
     //MOVE
     public void Move(Vector3 dir)
     {
@@ -59,54 +65,43 @@ public class Enemy : MonoBehaviour, IVel
         transform.forward = Vector3.Lerp(transform.forward, dir, 0.2f);
     }
     //GET-DIR
+    //public Vector3 GetDir()
+    //{
+    //    Vector3 point = _points[_currentIndex].position;
+    //    point.y = _transform.position.y;
+    //    Vector3 dir = point - _transform.position;
+    //    float distance = dir.magnitude;
+    //    if (distance < walkPointRange)
+    //    {
+    //        _currentIndex += _sense;
+    //        if (_currentIndex >= _points.Count || _currentIndex < 0)
+    //        {
+    //            _sense *= -1;
+    //            _currentIndex += _sense * 1;
+    //        }
+    //    }
+    //    return dir.normalized;
+    //}
+
     public Vector3 GetDir()
     {
-        Vector3 point = _points[_currentIndex].position;
-        point.y = _transform.position.y;
-        Vector3 dir = point - _transform.position;
-        float distance = dir.magnitude;
-        if (distance < walkPointRange)
-        {
-            _currentIndex += _sense;
-            if (_currentIndex >= _points.Count || _currentIndex < 0)
-            {
-                _sense *= -1;
-                _currentIndex += _sense * 1;
-            }
-        }
-        return dir.normalized;
+        Vector3 dir = stController._currentSteering.GetDir();
+        return dir;
     }
+
     //IN-SIGHT
     public bool IsInSight(Transform target)
     {
-        int actualFrame = Time.frameCount;
-        if (_lastFrameLOS == actualFrame)
-        {
-            return _cacheLOS;
-        }
-        _lastFrameLOS = actualFrame;
         Vector3 diff = (transform.position - target.position);
         float distance = diff.magnitude;
-        if (distance > range)
-        {
-            _cacheLOS = false;
-            return false;
-        }
+        if (distance > range) return false;
 
         float angleToTarget = Vector3.Angle(transform.position, diff);
-        if (angleToTarget > angle / 2)
-        {
-            _cacheLOS = false;
-            return false;
-        }
+        if (angleToTarget > angle / 2) return false;
 
         Vector3 dirToTarget = diff.normalized;
-        if (Physics.Raycast(transform.position, dirToTarget, distance, maskEnemies))
-        {
-            _cacheLOS = false;
-            return false;
-        }
-        _cacheLOS = true;
+        if (Physics.Raycast(transform.position, dirToTarget, distance, maskEnemies)) return false;
+
         return true;
     }
     //ATTACK

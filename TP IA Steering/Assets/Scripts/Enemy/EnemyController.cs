@@ -8,13 +8,13 @@ public class EnemyController : MonoBehaviour
     public FSM<states> _fsm;
     Enemy _enemy;
     public Transform target;
+    public StController stController;
     
     ISteering _steering;
     ISteering _avoidance;
      
     public float timePrediction;
     Vector3 dir;
-    public LayerMask obsMask;
 
     public float shootRange;
     private float dist;
@@ -41,8 +41,7 @@ public class EnemyController : MonoBehaviour
         _fsm = new FSM<states>();
         _enemy = GetComponent<Enemy>();
         InitializedTree();
-        InitializedFSM();
-        InitializedISteering();     
+        InitializedFSM();     
     }
     void InitializedFSM()
     {
@@ -59,16 +58,6 @@ public class EnemyController : MonoBehaviour
        _fsm.SetInit(patrol);
 
        //_fsm = new FSM<states>(patrol);
-    }
-    void InitializedISteering()
-    {
-        var seek = new Seek(transform, target.transform);//cazar
-        var flee = new Flee(transform, target.transform);//escape
-        var pursuit = new Pursuit(transform, target.transform, _enemy, timePrediction);//perseguir
-        var evade = new Evade(transform, target.transform, _enemy, timePrediction);
-        var avoidance = new ObstacleAvoidance(transform, obsMask, radius, angle);
-        _steering = seek;
-        _avoidance = avoidance;
     }
     void InitializedTree()
     {

@@ -36,4 +36,11 @@ public class PlayerMove : MonoBehaviour, IVel
         dir.y = 0;
         transform.forward = Vector3.Lerp(transform.forward, dir, 0.02f);
     }
+    public void SetWayPoints(List<Node> newPoints)
+    {
+        if (newPoints.Count == 0) return;
+        var pos = newPoints[newPoints.Count - 1].transform.position;
+        pos.y = transform.position.y;
+        transform.position = pos;
+    }
 }

@@ -7,17 +7,31 @@ namespace EnemyStates
     public class EnemyChase<T> : EnemyPatrol<T>
     {
         GameObject Player;
+<<<<<<< Updated upstream
         //public bool _canPatrol = true;
         Transform _target;
         Enemy _enemy;
         EnemyController _enemyController;
         //public bool inSight;
+=======
+        public bool _canPatrol = true;
+
+        EnemyController _enemyController;
+        Transform _target;
+        Enemy _enemy;
+        Pursuit pursuit;
+        public bool inSight;
+>>>>>>> Stashed changes
         float _distance = 0;
 
         Transform _npc;
         //INode _root;
 
+<<<<<<< Updated upstream
         public EnemyChase(Enemy enemyModel, EnemyController enemyController, Transform target, float distance, INode root) : base(enemyModel, target, distance, root)
+=======
+        public EnemyChase(Enemy enemyModel, EnemyController enemyController,Transform target, float distance, INode root) : base(enemyModel, target, distance, root)
+>>>>>>> Stashed changes
         {
             _target = target;
             _enemyController = enemyController;
@@ -32,8 +46,7 @@ namespace EnemyStates
 
         public Vector3 GetDir()
         {
-            //PlayerDetected = true;
-            Vector3 dir = (_target.position - _enemy.position).normalized;
+            Vector3 dir = _enemy.GetDir().normalized;
             return dir;
         }
 
@@ -60,6 +73,7 @@ namespace EnemyStates
 
         public override void Execute()
         {
+            _enemy.stController.SetNewSteering(pursuit);
             MoveToPlayer();
             Debug.Log("Chasing");
         }

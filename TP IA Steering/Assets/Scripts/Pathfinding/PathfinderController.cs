@@ -5,22 +5,34 @@ using UnityEngine;
 public class PathfinderController : MonoBehaviour
 {
     public CI_Model crash;
-    public StModel player;
+    public PlayerMove player;
     public Node start;
     public Node end;
     Astar<Node> _ast;
+    public List<Node> path;
+    public LayerMask mask;
+    public float distanceMax;
+    public float radius;
+    public Vector3 offset;
+    //public Box box;
+
 
     private void Awake()
     {
         _ast = new Astar<Node>();
     }
 
-    //public void AstarPathfinding()
-    //{
-    //    List<Node> path = _ast.GetPath(start, IsSatisfied, GetNeighbours, GetCost, Heuristic);
-    //    crash.SetWayPoints(path);
-    //    player.SetWayPoints(path);
-    //}
+    private void Start()
+    {
+        AstarPathfinding();
+    }
+
+    public void AstarPathfinding()
+    {
+        path = _ast.GetPath(start, IsSatisfied, GetNeighbours, GetCost, Heuristic);
+        crash.SetWayPoints(path);
+        //player.SetWayPoints(path);
+    }
     float Heuristic(Node curr)
     {
         float distanceMultiplier = 2;
@@ -48,5 +60,23 @@ public class PathfinderController : MonoBehaviour
     bool IsSatisfied(Node curr)
     {
         return curr == end;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        if (start != null)
+            Gizmos.DrawSphere(start.transform.position + offset, radius);
+        if (end != null)
+            Gizmos.DrawSphere(end.transform.position + offset, radius);
+        if (path != null)
+        {
+            Gizmos.color = Color.blue;
+            foreach (var item in path)
+            {
+                if (item != start && item != end)
+                    Gizmos.DrawSphere(item.transform.position + offset, radius);
+            }
+        }
     }
 }

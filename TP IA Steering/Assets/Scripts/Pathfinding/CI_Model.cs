@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CI_Model : MonoBehaviour, IPoints
 {
-    public List<Vector3> waypoints;
+    public List<Node> waypoints;
     public float speed = 2;
     public float speedRot = 10;
     public bool readyToMove;
@@ -21,22 +21,23 @@ public class CI_Model : MonoBehaviour, IPoints
         transform.forward = Vector3.Lerp(transform.forward, dir, speedRot * Time.deltaTime);
         _anim.SetFloat("Vel", 1);
     }
+    //public void SetWayPoints(List<Node> newPoints)
+    //{
+    //    var list = new List<Vector3>();
+    //    for (int i = 0; i < newPoints.Count; i++)
+    //    {
+    //        list.Add(newPoints[i].transform.position);
+    //    }
+    //    SetWayPoints(list);
+    //}
     public void SetWayPoints(List<Node> newPoints)
     {
-        var list = new List<Vector3>();
-        for (int i = 0; i < newPoints.Count; i++)
-        {
-            list.Add(newPoints[i].transform.position);
-        }
-        SetWayPoints(list);
-    }
-    public void SetWayPoints(List<Vector3> newPoints)
-    {
         _nextPoint = 0;
+        Debug.Log("next point" + _nextPoint);
         if (newPoints.Count == 0) return;
         _anim.Play("CIA_Idle");
         waypoints = newPoints;
-        var pos = waypoints[_nextPoint];
+        var pos = waypoints[_nextPoint].transform.position;
         pos.y = transform.position.y;
         transform.position = pos;
         readyToMove = true;
@@ -44,7 +45,8 @@ public class CI_Model : MonoBehaviour, IPoints
     public void Run()
     {
         var point = waypoints[_nextPoint];
-        var posPoint = point;
+        Debug.Log("Next point" + _nextPoint);
+        var posPoint = point.transform.position;
         posPoint.y = transform.position.y;
         Vector3 dir = posPoint - transform.position;
         if (dir.magnitude < 0.2f)

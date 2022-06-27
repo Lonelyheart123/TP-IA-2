@@ -13,8 +13,15 @@ public class StController : MonoBehaviour
     public float avoidanceWeight = 1;
     public float steeringWeight = 1;
     public LayerMask obsMask;
-    ISteering _steering;
+    public ISteering _currentSteering;
     ISteering _avoidance;
+
+    private void Awake()
+    {
+        _model = GetComponent<Entity>();
+        InitializedSteering();
+    }
+
     void InitializedSteering()
     {
         var seek = new Seek(transform, target.transform);
@@ -22,22 +29,16 @@ public class StController : MonoBehaviour
         var pursuit = new Pursuit(transform, target.transform, target, predictionTime);
         var evade = new Evade(transform, target.transform, target, predictionTime);
         var avoidance = new ObstacleAvoidance(transform, obsMask, radius, angle);
-        _steering = seek;
+        _currentSteering = seek;
         _avoidance = avoidance;//sigue y esquiva obstaculos
     }
-    private void Awake()
-    {   
-        _model = GetComponent<Entity>();
-        InitializedSteering();
-    }
-
     public void SetNewSteering(ISteering newSteering)
     {
-        _steering = newSteering;
+        _currentSteering = newSteering;
     }
     private void Update()
     {
-        var dir = (_avoidance.GetDir() * avoidanceWeight + _steering.GetDir() * steeringWeight).normalized;
+        var dir = (_avoidance.GetDir() * avoidanceWeight + _currentSteering.GetDir() * steeringWeight).normalized;
         _model.LookDir(dir);
         _model.Move(transform.forward);
     }
@@ -59,9 +60,9 @@ public class StController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        if (_steering != null)
+        if (_currentSteering != null)
         {
-            var dir = _steering.GetDir();
+            var dir = _currentSteering.GetDir();
             Gizmos.DrawRay(transform.position, dir * 2);
         }
         Gizmos.DrawWireSphere(transform.position, radius);
