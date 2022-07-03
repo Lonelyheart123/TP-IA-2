@@ -22,11 +22,6 @@ public class StController : MonoBehaviour
         InitializedSteering();
     }
 
-    private void Start()
-    {
-        InitializedSteering();
-    }
-
     void InitializedSteering()
     {
         var seek = new Seek(transform, target.transform);
@@ -41,26 +36,12 @@ public class StController : MonoBehaviour
     {
         _currentSteering = newSteering;
     }
+
     private void Update()
     {
         var dir = (_avoidance.GetDir() * avoidanceWeight + _currentSteering.GetDir() * steeringWeight).normalized;
         _model.LookDir(dir);
         _model.Move(transform.forward);
-    }
-    public bool LineOfSight(Transform target)
-    {
-        Vector3 diff = target.position - transform.position;
-        float distance = diff.magnitude;
-        if (distance > range) return false;
-
-        //ANGLE
-        float angleToTarget = Vector3.Angle(diff, transform.forward);
-        if (angleToTarget > angle / 2) return false;
-
-        //TARGETVIEW
-        if (Physics.Raycast(transform.position, diff.normalized, distance, obsMask)) return false;
-
-        return true;
     }
     private void OnDrawGizmos()
     {

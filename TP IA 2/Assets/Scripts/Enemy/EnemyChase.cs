@@ -4,43 +4,54 @@ using UnityEngine;
 
 namespace EnemyStates
 {
-    public class EnemyChase<T> : EnemyPatrol<T>
+    public class EnemyChase<T> : States<T>
     {
-        GameObject Player;
-        //public bool _canPatrol = true;
-        Transform _target;
+        PlayerMove _target;
         Enemy _enemy;
         EnemyController _enemyController;
-        Pursuit pursuit;
-        public bool inSight;
         float _distance = 0;
-        //public bool inSight;
+        public float predictionTime;
+        public float _radius;
+        public float _range = 30;
+        public float _angle;
+        Transform _transform;
+        public LayerMask _obsMask;
+        public ISteering _currentSteering;
+        INode _root;
 
-        public bool _canPatrol = true;
-
-
-        Transform _npc;
-        //INode _root;
-
-        public EnemyChase(Enemy enemyModel, EnemyController enemyController, Transform target, float distance, INode root) : base(enemyModel, target, distance, root)
-        {
-            _target = target;
+        public EnemyChase(Enemy enemyModel, EnemyController enemyController, PlayerMove target, float distance, INode root, float Radius, float Range, float Angle, Transform Transform, LayerMask ObsMask, ISteering CurrentSteering)
+        {           
             _enemyController = enemyController;
             _enemy = enemyModel;
+            _target = target;
             _distance = distance;
-            base._root = root;
+            _root = root;
+            _radius = Radius;
+            _range = Range;
+            _angle = Angle;
+            _transform = Transform;
+            _obsMask = ObsMask;
+            _currentSteering = CurrentSteering;
         }
 
         public override void Init()
         {
+            InitializedSteering();
         }
-
+        void InitializedSteering()
+        {
+            var seek = new Seek(_transform, _target.transform);
+            _currentSteering = seek;//sigue y esquiva obstaculos
+        }
         public Vector3 GetDir()
         {
-            Vector3 dir = _enemy.GetDir().normalized;
+            Vector3 dir = _currentSteering.GetDir();
             return dir;
         }
-
+        public void SetNewSteering(ISteering newSteering)
+        {
+            _currentSteering = newSteering;
+        }
         void MoveToPlayer()
         {
             bool isLineOfSight = _enemyController.LineOfSight();
@@ -54,17 +65,16 @@ namespace EnemyStates
             }
             else if (isLineOfSight && isInShootRange)
             {
-                base._root.execute();
+                _root.execute();
             }
             else
             {
-                base._root.execute();
+                _root.execute();
             }
         }
 
         public override void Execute()
         {
-            _enemy.stController.SetNewSteering(pursuit);
             MoveToPlayer();
             Debug.Log("Chasing");
         }

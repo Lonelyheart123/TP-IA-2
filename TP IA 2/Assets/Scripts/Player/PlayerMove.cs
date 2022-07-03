@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour, IVel
 {
-    public List<Node> waypoints;
     int _nextPoint = 0;
     public bool readyToMove;
     public float speed;
     Rigidbody _rb;
     public CharacterController controller;
+    public Vector3 position;
 
     public float GetVel => _rb.velocity.magnitude;
 
@@ -38,16 +38,5 @@ public class PlayerMove : MonoBehaviour, IVel
     {
         dir.y = 0;
         transform.forward = Vector3.Lerp(transform.forward, dir, 0.02f);
-    }
-    public void SetWayPoints(List<Node> newPoints)
-    {
-        _nextPoint = 0;
-        Debug.Log("next point" + _nextPoint);
-        if (newPoints.Count == 0) return;
-        waypoints = newPoints;
-        var pos = waypoints[_nextPoint].transform.position;
-        pos.y = transform.position.y;
-        transform.position = pos;
-        readyToMove = true;
     }
 }

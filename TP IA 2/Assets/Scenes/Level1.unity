@@ -1230,7 +1230,6 @@ MonoBehaviour:
   - {fileID: 196359557}
   - {fileID: 1715255424}
   - {fileID: 641906138}
-  - {fileID: 1299616473}
   mask:
     serializedVersion: 2
     m_Bits: 64
@@ -2422,18 +2421,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 9197412631170533104, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
   m_PrefabInstance: {fileID: 9197412630146812617}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &885476377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 885476376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42abe27ef27f06a4b8db4c206e555d9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!136 &885476378
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2902,6 +2889,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pathfinder Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 9197412631170533104, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9197412631170533106, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -2973,7 +2964,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 9197412631170533108, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
     - {fileID: 9197412631170533109, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
-    - {fileID: 8439947495975581985, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
+    - {fileID: 0}
     - {fileID: 2720111380129739181, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
 --- !u!1 &978151794
@@ -4439,10 +4430,6 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 1935734536}
-    - target: {fileID: 8439947495975581985, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 1935734536}
     - target: {fileID: 9197412631170533104, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
       propertyPath: m_Name
       value: Enemy (1)
@@ -4492,9 +4479,21 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9197412631170533108, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
+      propertyPath: radius
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 9197412631170533108, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
       propertyPath: stController
       value: 
-      objectReference: {fileID: 1443661515}
+      objectReference: {fileID: 0}
+    - target: {fileID: 9197412631170533108, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
+      propertyPath: maskEnemies.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 9197412631170533108, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
+      propertyPath: obstacleMask.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
     - target: {fileID: 9197412631170533108, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
       propertyPath: _points.Array.data[0]
       value: 
@@ -4522,27 +4521,16 @@ PrefabInstance:
     - target: {fileID: 9197412631170533109, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
       propertyPath: stController
       value: 
-      objectReference: {fileID: 1443661515}
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2720111380129739181, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
 --- !u!1 &1443661508 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9197412631170533104, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
   m_PrefabInstance: {fileID: 1443661507}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1443661509
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1443661508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42abe27ef27f06a4b8db4c206e555d9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!136 &1443661514
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4557,17 +4545,6 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1443661515 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8439947495975581985, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
-  m_PrefabInstance: {fileID: 1443661507}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1443661508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e0a26d176fe4b346820fe21bac405d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1476756412
 GameObject:
   m_ObjectHideFlags: 0
@@ -5800,15 +5777,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bb9a2e06b634354d972979ebbfddb9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waypoints:
-  - {fileID: 1423298555}
-  - {fileID: 847802925}
-  - {fileID: 196359557}
-  - {fileID: 1715255424}
-  - {fileID: 1299616473}
   readyToMove: 0
   speed: 16
   controller: {fileID: 1935734535}
+  position: {x: 0, y: 0, z: 0}
 --- !u!54 &1935734537
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6401,7 +6373,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4755433207570701688, guid: 64338d9be3e41f94aadd4dda4499672e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 57.4
+      value: 127.4
       objectReference: {fileID: 0}
     - target: {fileID: 4755433207570701688, guid: 64338d9be3e41f94aadd4dda4499672e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6409,7 +6381,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4755433207570701688, guid: 64338d9be3e41f94aadd4dda4499672e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -127.1
+      value: 83.6
       objectReference: {fileID: 0}
     - target: {fileID: 4755433207570701688, guid: 64338d9be3e41f94aadd4dda4499672e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6612,10 +6584,6 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 1935734536}
-    - target: {fileID: 8439947495975581985, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 1935734536}
     - target: {fileID: 9197412631170533104, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -6626,7 +6594,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9197412631170533106, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 97.7
+      value: 88.5
       objectReference: {fileID: 0}
     - target: {fileID: 9197412631170533106, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6665,9 +6633,25 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9197412631170533108, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
+      propertyPath: radius
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 9197412631170533108, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
       propertyPath: stController
       value: 
-      objectReference: {fileID: 9197412630146812618}
+      objectReference: {fileID: 0}
+    - target: {fileID: 9197412631170533108, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
+      propertyPath: _currentIndex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9197412631170533108, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
+      propertyPath: maskEnemies.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 9197412631170533108, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
+      propertyPath: obstacleMask.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
     - target: {fileID: 9197412631170533108, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
       propertyPath: _points.Array.data[0]
       value: 
@@ -6695,17 +6679,6 @@ PrefabInstance:
     - target: {fileID: 9197412631170533109, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
       propertyPath: stController
       value: 
-      objectReference: {fileID: 9197412630146812618}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
---- !u!114 &9197412630146812618 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8439947495975581985, guid: 2eb21cd08727f80419248815633dc6ef, type: 3}
-  m_PrefabInstance: {fileID: 9197412630146812617}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 885476376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e0a26d176fe4b346820fe21bac405d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 9197412631170533108}
   - component: {fileID: 9197412631170533109}
   - component: {fileID: 9197412631170533111}
-  - component: {fileID: 8439947495975581985}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: enemy
@@ -50,10 +49,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyBullet: {fileID: 3564629819937539748, guid: 107e5e767f04a5d4d9116f4f9902fa59, type: 3}
   enemyController: {fileID: 9197412631170533109}
-  stController: {fileID: 8439947495975581985}
   range: 15
   angle: 180
   speed: 8
+  radius: 0
   _points:
   - {fileID: 0}
   - {fileID: 0}
@@ -62,9 +61,11 @@ MonoBehaviour:
   - {fileID: 0}
   walkPointRange: 1
   _sense: 1
-  maskEnemies:
+  _currentIndex: 0
+  obstacleMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 0
+  canSeePlayer: 0
 --- !u!114 &9197412631170533109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,7 +79,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  stController: {fileID: 8439947495975581985}
   timePrediction: 2
   shootRange: 15
 --- !u!54 &9197412631170533111
@@ -97,28 +97,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!114 &8439947495975581985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9197412631170533104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e0a26d176fe4b346820fe21bac405d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  predictionTime: 2
-  radius: 30
-  range: 30
-  angle: 180
-  avoidanceWeight: 1
-  steeringWeight: 1
-  obsMask:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!1 &9197412631232091331
 GameObject:
   m_ObjectHideFlags: 0

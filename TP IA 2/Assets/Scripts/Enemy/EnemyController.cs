@@ -8,7 +8,7 @@ public class EnemyController : MonoBehaviour
     public FSM<states> _fsm;
     Enemy _enemy;
     public Transform target;
-    public StController stController;
+    PlayerMove _playerMove;
 
     ISteering _steering;
     ISteering _avoidance;
@@ -21,7 +21,7 @@ public class EnemyController : MonoBehaviour
     private float radius;
     private float angle;
     private float avoidanceWeight;
-    INode _root;
+    private INode _root;
 
     private void Awake()
     {
@@ -45,8 +45,8 @@ public class EnemyController : MonoBehaviour
     }
     void InitializedFSM()
     {
-        IStates<states> patrol = new EnemyPatrol<states>(_enemy, target, dist, _root);
-        IStates<states> chase = new EnemyChase<states>(_enemy, this, target, dist, _root);
+        IStates<states> patrol = new EnemyPatrol<states>(_enemy, target, dist, _root, _enemy.radius, _enemy.range, _enemy.angle, _enemy._points, _enemy.walkPointRange, _enemy._currentIndex,_enemy.transform, _enemy._sense, _enemy.obstacleMask, _enemy._currentSteering);
+        IStates<states> chase = new EnemyChase<states>(_enemy, this, _playerMove, dist, _root, _enemy.radius, _enemy.range, _enemy.angle, _enemy.transform, _enemy.obstacleMask, _enemy._currentSteering);
         IStates<states> attack = new EnemyAttack<states>(_enemy, this, target, dist, dir, _root);
 
         patrol.AddTransition(states.Chase, chase);
@@ -73,9 +73,7 @@ public class EnemyController : MonoBehaviour
     }
     public bool LineOfSight()
     {
-        bool isInSight = _enemy.IsInSight(target) ? true : false;
-        Debug.Log("Line of Sight:" + isInSight);
-        return isInSight;
+        return _enemy.canSeePlayer;
     }
     public bool ShootRange()
     {

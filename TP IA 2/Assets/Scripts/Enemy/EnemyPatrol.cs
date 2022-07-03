@@ -8,41 +8,86 @@ namespace EnemyStates
     {
         public bool _canPatrol = true;
 
-        Seek seek;
         Transform _target;
         Enemy _enemy;
-        public bool inSight;
         float _distance = 0;
-        protected INode _root;
-        ISteering newSteering;
+        private INode _root;
+        public float _radius;
+        public float _range = 30;
+        public float _angle;
+        public List<Transform> _points;
+        public float _walkPointRange = 1;
+        int _currentIndex = 0;
+        Transform _transform;
+        [SerializeField] int _sense;
+        public LayerMask _obsMask;
+        public ISteering _currentSteering;
 
-        public EnemyPatrol(Enemy enemyModel, Transform target, float distance, INode root)
+        public EnemyPatrol(Enemy EnemyModel, Transform Target, float Distance, INode Root, float Radius, float Range, float Angle, List<Transform> Points, float WalkPointRange, int CurrentIndex, Transform Transform, int Sense, LayerMask ObsMask, ISteering CurrentSteering)
         {
-            _target = target;
-            _enemy = enemyModel;
-            _distance = distance;
-            _root = root;
+            _target = Target;
+            _enemy = EnemyModel;
+            _distance = Distance;
+            _root = Root;
+            _radius = Radius;
+            _range = Range;
+            _angle = Angle;
+            _points = Points;
+            _walkPointRange = WalkPointRange;
+            _currentIndex = CurrentIndex;
+            _transform = Transform;
+            _sense = Sense;
+            _obsMask = ObsMask;
+            _currentSteering = CurrentSteering;
         }
 
         public override void Init()
         {
-
+            InitializedSteering();
         }
 
+        void InitializedSteering()
+        {
+            var avoidance = new ObstacleAvoidance(_transform, _obsMask, _radius, _angle);
+            _currentSteering = avoidance;//sigue y esquiva obstaculos
+        }
+        public void SetNewSteering(ISteering newSteering)
+        {
+            _currentSteering = newSteering;
+        }
+        public Vector3 WaypointDir()
+        {
+            Vector3 point = _points[_currentIndex].position;
+            point.y = _transform.position.y;
+            Vector3 dir = point - _transform.position;
+            float distance = dir.magnitude;
+            if (distance < _walkPointRange)
+            {
+                _currentIndex += _sense;
+                if (_currentIndex >= _points.Count || _currentIndex < 0)
+                {
+                    _sense *= -1;
+                    _currentIndex += _sense * 1;
+                }
+            }
+            _enemy.Move(dir.normalized);
+            return dir.normalized;
+        }
         public override void Execute()
         {
 
-            _enemy.Move(_enemy.GetDir());
-
             Debug.Log("Patrolling");
-            //_enemy.Move(/*_enemy.GetDir()*/);
-            //_enemy.GetDir();
-            _enemy.stController.SetNewSteering(seek);
             if (_enemy.IsInSight(_target))
             {
-                inSight = true;
+                _enemy.CanSeePlayer();
                 Debug.Log("Is in sight");
                 _root.execute();
+            }
+            else
+            {
+                WaypointDir();
+                Debug.Log("HOLA");
+                _enemy.CantSeePlayer();
             }
 
         }

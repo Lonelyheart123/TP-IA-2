@@ -16,39 +16,28 @@ public class Enemy : MonoBehaviour, IVel
     Seek seek;
     public EnemyBullet _enemyBullet;
     public EnemyController enemyController;
-    public StController stController;
 
     public float range = 30;
     public float angle = 90;
     public int speed;
 
+    public float radius;
     public List<Transform> _points;
     public float walkPointRange = 1;
-    int _currentIndex = 0;
-    [SerializeField] int _sense;
+    public int _sense;
+    public int _currentIndex = 0;
 
-    public LayerMask maskEnemies;
+    public LayerMask obstacleMask;
     internal Vector3 position;
+    public ISteering _currentSteering;
 
     int _lastFrameLOS;
     bool _cacheLOS;
-
+    public bool canSeePlayer;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
         _transform = GetComponent<Transform>();
-    }
-
-    //CHECK-ENEMIES
-    public GameObject[] CheckEnemies()
-    {
-        Collider[] colls = Physics.OverlapSphere(transform.position, range, maskEnemies);
-        GameObject[] objs = new GameObject[colls.Length];
-        for (int i = 0; i < colls.Length; i++)
-        {
-            objs[i] = colls[i].gameObject;
-        }
-        return objs;
     }
 
     //MOVE
@@ -64,30 +53,6 @@ public class Enemy : MonoBehaviour, IVel
         dir.y = 0;
         transform.forward = Vector3.Lerp(transform.forward, dir, 0.2f);
     }
-    //GET-DIR
-    //public Vector3 GetDir()
-    //{
-    //    Vector3 point = _points[_currentIndex].position;
-    //    point.y = _transform.position.y;
-    //    Vector3 dir = point - _transform.position;
-    //    float distance = dir.magnitude;
-    //    if (distance < walkPointRange)
-    //    {
-    //        _currentIndex += _sense;
-    //        if (_currentIndex >= _points.Count || _currentIndex < 0)
-    //        {
-    //            _sense *= -1;
-    //            _currentIndex += _sense * 1;
-    //        }
-    //    }
-    //    return dir.normalized;
-    //}
-
-    public Vector3 GetDir()
-    {
-        Vector3 dir = stController._currentSteering.GetDir();
-        return dir;
-    }
 
     //IN-SIGHT
     public bool IsInSight(Transform target)
@@ -100,9 +65,18 @@ public class Enemy : MonoBehaviour, IVel
         if (angleToTarget > angle / 2) return false;
 
         Vector3 dirToTarget = diff.normalized;
-        if (Physics.Raycast(transform.position, dirToTarget, distance, maskEnemies)) return false;
+        if (Physics.Raycast(transform.position, dirToTarget, distance, obstacleMask)) return false;
 
         return true;
+    }
+
+    public void CanSeePlayer()
+    {
+        canSeePlayer = true;
+    }
+    public void CantSeePlayer()
+    {
+        canSeePlayer = false;
     }
     //ATTACK
     public void Attack(Vector3 dir)
