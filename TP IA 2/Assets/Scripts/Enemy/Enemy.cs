@@ -26,10 +26,14 @@ public class Enemy : MonoBehaviour, IVel
     public float walkPointRange = 1;
     public int _sense;
     public int _currentIndex = 0;
+    public float _avoidanceWeight = 1;
+    public float _steeringWeight = 1;
+    public float _predictionTime = 2;
 
     public LayerMask obstacleMask;
     internal Vector3 position;
     public ISteering _currentSteering;
+    public ISteering _avoidance;
 
     int _lastFrameLOS;
     bool _cacheLOS;

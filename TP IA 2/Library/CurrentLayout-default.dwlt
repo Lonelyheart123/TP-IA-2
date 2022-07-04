@@ -74,7 +74,7 @@ MonoBehaviour:
   m_MinSize: {x: 404, y: 221}
   m_MaxSize: {x: 8004, y: 4021}
   vertical: 0
-  controlID: 139
+  controlID: 76
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -124,7 +124,7 @@ MonoBehaviour:
   m_MinSize: {x: 881, y: 342}
   m_MaxSize: {x: 16006, y: 8042}
   vertical: 1
-  controlID: 160
+  controlID: 166
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_MinSize: {x: 881, y: 342}
   m_MaxSize: {x: 16006, y: 8042}
   vertical: 0
-  controlID: 161
+  controlID: 167
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -248,7 +248,7 @@ MonoBehaviour:
   m_MinSize: {x: 605, y: 342}
   m_MaxSize: {x: 12005, y: 8042}
   vertical: 1
-  controlID: 137
+  controlID: 74
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -273,7 +273,7 @@ MonoBehaviour:
   m_MinSize: {x: 605, y: 221}
   m_MaxSize: {x: 12005, y: 4021}
   vertical: 0
-  controlID: 138
+  controlID: 75
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -408,7 +408,7 @@ MonoBehaviour:
     m_VAllowExceedBaseRangeMin: 1
     m_VAllowExceedBaseRangeMax: 1
     m_ScaleWithWindow: 0
-    m_HSlider: 0
+    m_HSlider: 1
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
     m_EnableMouseInput: 1
@@ -422,18 +422,18 @@ MonoBehaviour:
       y: 21
       width: 336
       height: 322
-    m_Scale: {x: 0.175, y: 0.175}
-    m_Translation: {x: 168, y: 161}
+    m_Scale: {x: 0.20287295, y: 0.20287295}
+    m_Translation: {x: 188.30641, y: 161}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -960
-      y: -920
-      width: 1920
-      height: 1840
+      x: -928.1987
+      y: -793.60016
+      width: 1656.209
+      height: 1587.2003
     m_MinimalGUI: 1
   m_defaultScale: 0.175
   m_LastWindowPixelSize: {x: 336, y: 343}
@@ -532,9 +532,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 93.39279, y: -20.992096, z: 84.27571}
+    m_Target: {x: 92.843, y: -0.013206482, z: 90.72338}
     speed: 2
-    m_Value: {x: 93.39279, y: -20.992096, z: 84.27571}
+    m_Value: {x: 92.843, y: -0.013206482, z: 90.72338}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -581,13 +581,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.4693217, y: -0.53019094, z: 0.47635457, w: 0.5216161}
+    m_Target: {x: 0.3186823, y: -0.63928133, z: 0.32914913, w: 0.61789054}
     speed: 2
-    m_Value: {x: 0.46923667, y: -0.5300949, z: 0.47626826, w: 0.5215216}
+    m_Value: {x: 0.3186239, y: -0.63916415, z: 0.32908878, w: 0.6177773}
   m_Size:
-    m_Target: 40.540146
+    m_Target: 31.479914
     speed: 2
-    m_Value: 40.540146
+    m_Value: 31.479914
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -650,13 +650,13 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/FSM
+    - Assets/Scripts/Enemy
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts/FSM
+  - Assets/Scripts/Enemy
   m_LastFoldersGridSize: -1
   m_LastProjectPath: D:\Materias\Inteligencia Artificial 2022\Segundo Parcial\TP-IA-2\TP
     IA 2
@@ -664,8 +664,8 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 102}
-    m_SelectedIDs: 1a410000
-    m_LastClickedID: 16666
+    m_SelectedIDs: e6530000
+    m_LastClickedID: 21478
     m_ExpandedIDs: 00000000f0400000f2400000f440000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -721,7 +721,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: a43e0000
     m_LastClickedInstanceID: 16036
-    m_HadKeyboardFocusLastEvent: 1
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -807,7 +807,7 @@ MonoBehaviour:
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_LastInspectedObjectInstanceID: -1
-  m_LastVerticalScrollValue: 163
+  m_LastVerticalScrollValue: 113
   m_GlobalObjectId: 
   m_LockTracker:
     m_IsLocked: 0

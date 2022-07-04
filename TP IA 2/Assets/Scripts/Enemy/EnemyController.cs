@@ -8,7 +8,7 @@ public class EnemyController : MonoBehaviour
     public FSM<states> _fsm;
     Enemy _enemy;
     public Transform target;
-    PlayerMove _playerMove;
+    public PlayerMove playerMove;
 
     ISteering _steering;
     ISteering _avoidance;
@@ -46,7 +46,7 @@ public class EnemyController : MonoBehaviour
     void InitializedFSM()
     {
         IStates<states> patrol = new EnemyPatrol<states>(_enemy, target, dist, _root, _enemy.radius, _enemy.range, _enemy.angle, _enemy._points, _enemy.walkPointRange, _enemy._currentIndex,_enemy.transform, _enemy._sense, _enemy.obstacleMask, _enemy._currentSteering);
-        IStates<states> chase = new EnemyChase<states>(_enemy, this, _playerMove, dist, _root, _enemy.radius, _enemy.range, _enemy.angle, _enemy.transform, _enemy.obstacleMask, _enemy._currentSteering);
+        IStates<states> chase = new EnemyChase<states>(_enemy, this, playerMove, dist, _root, _enemy.radius, _enemy.range, _enemy.angle, _enemy.transform, _enemy.obstacleMask, _enemy._currentSteering, _enemy._avoidance, _enemy._avoidanceWeight, _enemy._steeringWeight);
         IStates<states> attack = new EnemyAttack<states>(_enemy, this, target, dist, dir, _root);
 
         patrol.AddTransition(states.Chase, chase);

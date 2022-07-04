@@ -9,17 +9,20 @@ namespace EnemyStates
         PlayerMove _target;
         Enemy _enemy;
         EnemyController _enemyController;
-        float _distance = 0;
-        public float predictionTime;
+        float _distance = 1;
+        public float predictionTime = 1;
         public float _radius;
         public float _range = 30;
         public float _angle;
+        public float _avoidanceWeight = 1;
+        public float _steeringWeight = 1;
         Transform _transform;
         public LayerMask _obsMask;
         public ISteering _currentSteering;
+        public ISteering _avoidance;
         INode _root;
 
-        public EnemyChase(Enemy enemyModel, EnemyController enemyController, PlayerMove target, float distance, INode root, float Radius, float Range, float Angle, Transform Transform, LayerMask ObsMask, ISteering CurrentSteering)
+        public EnemyChase(Enemy enemyModel, EnemyController enemyController, PlayerMove target, float distance, INode root, float Radius, float Range, float Angle, Transform Transform, LayerMask ObsMask, ISteering CurrentSteering, ISteering Avoidance, float AvoidanceWeight, float SteeringWeight)
         {           
             _enemyController = enemyController;
             _enemy = enemyModel;
@@ -32,6 +35,9 @@ namespace EnemyStates
             _transform = Transform;
             _obsMask = ObsMask;
             _currentSteering = CurrentSteering;
+            _avoidance = Avoidance;
+            _avoidanceWeight = AvoidanceWeight;
+            _steeringWeight = SteeringWeight;
         }
 
         public override void Init()
@@ -40,17 +46,17 @@ namespace EnemyStates
         }
         void InitializedSteering()
         {
-            var seek = new Seek(_transform, _target.transform);
-            _currentSteering = seek;//sigue y esquiva obstaculos
+            var pursuit = new Pursuit(_transform, _target.transform, _target, predictionTime);
+            _avoidance = pursuit;
         }
         public Vector3 GetDir()
         {
-            Vector3 dir = _currentSteering.GetDir();
+            Vector3 dir = _avoidance.GetDir();
             return dir;
         }
         public void SetNewSteering(ISteering newSteering)
         {
-            _currentSteering = newSteering;
+            _avoidance = newSteering;
         }
         void MoveToPlayer()
         {
@@ -59,7 +65,7 @@ namespace EnemyStates
             if (isLineOfSight && !isInShootRange)
             {
                 Vector3 dir = GetDir();
-                _enemy.transform.LookAt(_target.position);
+                _enemy.transform.LookAt(_target.transform.position);
                 var ySpeed = _enemy.GetComponent<Rigidbody>().velocity.y;
                 _enemy.GetComponent<Rigidbody>().velocity = new Vector3(dir.x * _enemy.speed, ySpeed, dir.z * _enemy.speed);
             }
