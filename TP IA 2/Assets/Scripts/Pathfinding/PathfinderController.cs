@@ -11,6 +11,7 @@ public class PathfinderController : MonoBehaviour
     Astar<Node> _ast;
     public List<Node> path;
     public LayerMask mask;
+    public LayerMask maskNodes;
     public float distanceMax;
     public float radius;
     public Vector3 offset;
@@ -29,6 +30,22 @@ public class PathfinderController : MonoBehaviour
 
     public void AstarPathfinding()
     {
+        var nearNodes = Physics.OverlapSphere(player.transform.position, 5, maskNodes);
+
+        Collider nearNode = null;
+        float nearDistance = 0;
+        for (int i = 0; i < nearNodes.Length; i++)
+        {
+            Collider currObs = nearNodes[i];
+            Vector3 dir = currObs.transform.position - player.position;//cumple con lo pedido de ISteering
+            float currDistance = Vector3.Distance(player.position, currObs.transform.position);
+            if (nearNode == null || nearDistance > currDistance)
+            {
+                nearNode = currObs;
+                nearDistance = currDistance;
+            }
+        }
+        end = nearNode.GetComponent<Node>();
         path = _ast.GetPath(start, IsSatisfied, GetNeighbours, GetCost, Heuristic);
         crash.SetWayPoints(path);
     }

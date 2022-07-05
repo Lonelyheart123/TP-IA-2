@@ -23,7 +23,7 @@ namespace EnemyStates
         INode _root;
 
         public EnemyChase(Enemy enemyModel, EnemyController enemyController, PlayerMove target, float distance, INode root, float Radius, float Range, float Angle, Transform Transform, LayerMask ObsMask, ISteering CurrentSteering, ISteering Avoidance, float AvoidanceWeight, float SteeringWeight)
-        {           
+        {
             _enemyController = enemyController;
             _enemy = enemyModel;
             _target = target;
@@ -60,21 +60,25 @@ namespace EnemyStates
         }
         void MoveToPlayer()
         {
-            bool isLineOfSight = _enemyController.LineOfSight();
+            bool isLineOfSight = _enemy.IsInSight(_target.transform);
             bool isInShootRange = _enemyController.ShootRange();
-            if (isLineOfSight && !isInShootRange)
+
+            if (isInShootRange)
             {
+                _enemy.CanSeePlayer();
+                _root.execute();
+            }
+            else if (isLineOfSight)
+            {
+                _enemy.CanSeePlayer();
                 Vector3 dir = GetDir();
                 _enemy.transform.LookAt(_target.transform.position);
                 var ySpeed = _enemy.GetComponent<Rigidbody>().velocity.y;
                 _enemy.GetComponent<Rigidbody>().velocity = new Vector3(dir.x * _enemy.speed, ySpeed, dir.z * _enemy.speed);
             }
-            else if (isLineOfSight && isInShootRange)
-            {
-                _root.execute();
-            }
             else
             {
+                _enemy.CantSeePlayer();
                 _root.execute();
             }
         }

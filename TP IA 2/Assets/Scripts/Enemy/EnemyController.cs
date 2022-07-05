@@ -45,15 +45,18 @@ public class EnemyController : MonoBehaviour
     }
     void InitializedFSM()
     {
-        IStates<states> patrol = new EnemyPatrol<states>(_enemy, target, dist, _root, _enemy.radius, _enemy.range, _enemy.angle, _enemy._points, _enemy.walkPointRange, _enemy._currentIndex,_enemy.transform, _enemy._sense, _enemy.obstacleMask, _enemy._currentSteering);
+        IStates<states> patrol = new EnemyPatrol<states>(_enemy, target, dist, _root, _enemy.radius, _enemy.range, _enemy.angle, _enemy._points, _enemy.walkPointRange, _enemy._currentIndex, _enemy.transform, _enemy._sense, _enemy.obstacleMask, _enemy._currentSteering);
         IStates<states> chase = new EnemyChase<states>(_enemy, this, playerMove, dist, _root, _enemy.radius, _enemy.range, _enemy.angle, _enemy.transform, _enemy.obstacleMask, _enemy._currentSteering, _enemy._avoidance, _enemy._avoidanceWeight, _enemy._steeringWeight);
         IStates<states> attack = new EnemyAttack<states>(_enemy, this, target, dist, dir, _root);
 
         patrol.AddTransition(states.Chase, chase);
-        chase.AddTransition(states.Patrol, patrol);
+        patrol.AddTransition(states.Attack, attack);
 
         chase.AddTransition(states.Attack, attack);
+        chase.AddTransition(states.Patrol, patrol);
+
         attack.AddTransition(states.Chase, chase);
+        attack.AddTransition(states.Patrol, patrol);
 
         _fsm.SetInit(patrol);
 
@@ -67,7 +70,7 @@ public class EnemyController : MonoBehaviour
         INode patrol = new ActionNode(() => _fsm.Transition(states.Patrol));
         //Questions
         INode qIsEnemyClose = new QuestionNode(ShootRange, attack, chase);
-        INode qLineOfSight = new QuestionNode(LineOfSight, chase, patrol);
+        INode qLineOfSight = new QuestionNode(LineOfSight, qIsEnemyClose, patrol);
 
         _root = qLineOfSight;
     }

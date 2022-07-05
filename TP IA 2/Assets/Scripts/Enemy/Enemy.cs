@@ -61,11 +61,11 @@ public class Enemy : MonoBehaviour, IVel
     //IN-SIGHT
     public bool IsInSight(Transform target)
     {
-        Vector3 diff = (transform.position - target.position);
+        Vector3 diff = (target.position - transform.position);
         float distance = diff.magnitude;
         if (distance > range) return false;
 
-        float angleToTarget = Vector3.Angle(transform.position, diff);
+        float angleToTarget = Vector3.Angle(transform.forward, diff);
         if (angleToTarget > angle / 2) return false;
 
         Vector3 dirToTarget = diff.normalized;
